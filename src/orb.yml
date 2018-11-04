@@ -1,0 +1,139 @@
+version: 2.1
+
+description: |
+  Newman is a collection runner for Postman.
+  It allows you to effortlessly run and test a Postman collection.
+
+executors:
+  postman-newman-docker:
+    description: Official newman docker image - https://hub.docker.com/r/postman/newman
+    parameters:
+      tag:
+        description: Tag for postman/newman docker image - https://hub.docker.com/r/postman/newman/tags
+        type: string
+        default: 4.2.1
+    docker:
+      - image: postman/newman:<<parameters.tag>>
+
+commands:
+  newman-run:
+    description:
+      Run a Postman Collection
+      Reference - https://github.com/postmanlabs/newman#newman-run-collection-file-source-options
+    parameters:
+      collection:
+        description: Collection file path or URL
+        type: string
+      environment:
+        description: Environment file path or URL
+        type: string
+        default: ""
+      globals:
+        description: Globals file path or URL
+        type: string
+        default: ""
+      iteration-count:
+        description: Number of times the collection has to be run when used in conjunction with iteration data
+        type: string
+        default: ""
+      iteration-data:
+        description: Data source (CSV) file path or URL to be used for iteration
+        type: string
+        default: ""
+      folder:
+        description: Run requests within a particular folder/folders in a collection
+        type: string
+        default: ""
+      export-environment:
+        description: File path where Newman will output the final environment variables file before completing a run
+        type: string
+        default: ""
+      export-globals:
+        description: File path where Newman will output the final global variables file before completing a run
+        type: string
+        default: ""
+      export-collection:
+        description: File path where Newman will output the final collection file before completing a run
+        type: string
+        default: ""
+      timeout:
+        description: Time (in milliseconds) to wait for the entire collection run to complete execution
+        type: string
+        default: ""
+      timeout-request:
+        description: Time (in milliseconds) to wait for requests to return a response
+        type: string
+        default: ""
+      timeout-script:
+        description: Time (in milliseconds) to wait for scripts to complete execution
+        type: string
+        default: ""
+      insecure:
+        description: Disables SSL verification checks and allows self-signed SSL certificates
+        type: boolean
+        default: false
+      ignore-redirects:
+        description: Disable automatically following 3XX redirect responses
+        type: boolean
+        default: false
+      delay-request:
+        description: Delay between requests (milliseconds)
+        type: string
+        default: ""
+      additional-options:
+        description: | 
+          Additional options for newman run like --bail, --suppress-exit-code, client certificates and reporters, etc
+          References
+            https://github.com/postmanlabs/newman#newman-run-collection-file-source-options
+            https://github.com/postmanlabs/newman#ssl-client-certificates
+            https://github.com/postmanlabs/newman#reporters
+        type: string
+        default: ""
+    steps:
+      - run: >
+          newman run << parameters.collection >>
+          <<# parameters.environment >>--environment << parameters.environment >><</ parameters.environment >>
+          <<# parameters.globals >>--globals << parameters.globals >><</ parameters.globals >>
+          <<# parameters.iteration-count >>--iteration-count << parameters.iteration-count >><</ parameters.iteration-count >>
+          <<# parameters.iteration-data >>--iteration-data << parameters.iteration-data >><</ parameters.iteration-data >>
+          <<# parameters.folder >>--folder << parameters.folder >><</ parameters.folder >>
+          <<# parameters.export-environment >>--export-environment << parameters.export-environment >><</ parameters.export-environment >>
+          <<# parameters.export-globals >>--export-globals << parameters.export-globals >><</ parameters.export-globals >>
+          <<# parameters.export-collection >>--export-collection << parameters.export-collection >><</ parameters.export-collection >>
+          <<# parameters.timeout >>--timeout << parameters.timeout >><</ parameters.timeout >>
+          <<# parameters.timeout-request >>--timeout-request << parameters.timeout-request >><</ parameters.timeout-request >>
+          <<# parameters.timeout-script >>--timeout-script << parameters.timeout-script >><</ parameters.timeout-script >>
+          <<# parameters.insecure >>--insecure<</ parameters.insecure >>
+          <<# parameters.ignore-redirects >>--ignore-redirects<</ parameters.ignore-redirects >>
+          <<# parameters.delay-request >>--delay-request << parameters.delay-request >><</ parameters.delay-request >>
+          << parameters.additional-options >>
+
+examples:
+  running-collection:
+    description: Running a collection file with newman
+    usage:
+      version: 2.1
+      orbs:
+        newman: postman/newman@1.0.0
+      jobs:
+        newman-collection-run:
+          executor: newman/postman-newman-docker
+          steps:
+            - checkout
+            - newman/newman-run:
+                collection: ./collection.json
+  running-collection-with-env-timeout:
+    description: Running a collection file with an environment and timeout config
+    usage:
+      version: 2.1
+      orbs:
+        newman: postman/newman@1.0.0
+      jobs:
+        newman-collection-run-env-timeout:
+          executor: newman/postman-newman-docker
+          steps:
+            - checkout
+            - newman/newman-run:
+                collection: ./collection.json
+                environment: ./environment1.postman_environment.json
+                timeout: "1000"
