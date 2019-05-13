@@ -8,7 +8,7 @@ To use the `postman/newman` Orb, reference it in your CircleCI config and then u
 ```
 version: 2.1
 orbs:
-  newman: postman/newman@1.0.0
+  newman: postman/newman@0.0.2
 jobs:
   newman-collection-run:
     # use the official newman docker image via newman/postman-newman-docker executor
