@@ -4,7 +4,7 @@ description: |
   Newman is a collection runner for Postman.
   It allows you to effortlessly run and test a Postman collection.
 
-dispaly:
+display:
   home_url: https://www.postman.com/
   source_url: https://github.com/postmanlabs/newman-orb
 
