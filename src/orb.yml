@@ -15,7 +15,7 @@ executors:
       tag:
         description: Tag for postman/newman docker image - https://hub.docker.com/r/postman/newman/tags
         type: string
-        default: 4.5.7
+        default: 5.2.0
     docker:
       - image: postman/newman:<<parameters.tag>>
 
