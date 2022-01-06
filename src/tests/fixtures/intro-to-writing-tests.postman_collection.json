@@ -1,0 +1,3084 @@
+{
+	"info": {
+		"_postman_id": "142a747b-0386-4aa2-9336-7db74659d496",
+		"name": "Intro to writing tests - with examples",
+		"description": "This collection contains examples of tests that you can use to automate your testing process.\n\n- Basic test syntax\n- API tests\n- Integration tests\n\n# Quick tips for writing tests\n- Organize your test scenarios by grouping your requests in [collections](https://www.getpostman.com/docs/v6/postman/collections/intro_to_collections) and [folders](https://www.getpostman.com/docs/v6/postman/collections/managing_collections#adding-folders), and naming them descriptively\n- Document your API’s requirements using [markdown in the descriptions](https://www.getpostman.com/docs/v6/postman/collections/using_markdown_for_descriptions)\n- Use [variables](https://www.getpostman.com/docs/v6/postman/environments_and_globals/variables) to simulate more sophisticated user flows\n- Common tests that will be run after every request can be added to collection-level tests or folder-level tests\n\n# Resources\nIf you're not already familiar with writing tests in Postman, check out these resources.\n* Postman docs: [Test scripts](https://www.getpostman.com/docs/v6/postman/scripts/test_scripts)\n* Postman docs: [Test examples](https://www.getpostman.com/docs/v6/postman/scripts/test_examples)\n* Community contribution: [Quick reference guide](https://community.getpostman.com/t/the-postman-cheatsheet-quick-reference-guide/1054)\n* Community contribution: [Examples and guides](https://github.com/DannyDainton/All-Things-Postman)\n* Postman blog: [Writing tests in Postman](http://blog.getpostman.com/2017/10/25/writing-tests-in-postman/)\n* Postman blog: [API testing tips from a Postman professional](http://blog.getpostman.com/2017/07/28/api-testing-tips-from-a-postman-professional/)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Basic test syntax",
+			"item": [
+				{
+					"name": "pm.test",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// use the `pm.*` API to write your test",
+									"// the `pm.test()` method accepts 2 parameters",
+									"// the first parameter is the name of your test (be descriptive)",
+									"// the second parameter is a function whereby if any assertions within your function fail, then the test will fail",
+									"",
+									"pm.test(\"Name of the first test\", function () {",
+									"    // make an assertion",
+									"    // if your assertion throws an error, this test will fail",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Name of the second test\", function () {",
+									"    // make as many assertions as you'd like as part of this test",
+									"    // if any assertion throws an error, this test will fail",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.be.ok;",
+									"    pm.response.to.be.json;",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://postman-echo.com/get?foo1=bar1&foo2=bar2",
+							"protocol": "https",
+							"host": [
+								"postman-echo",
+								"com"
+							],
+							"path": [
+								"get"
+							],
+							"query": [
+								{
+									"key": "foo1",
+									"value": "bar1"
+								},
+								{
+									"key": "foo2",
+									"value": "bar2"
+								}
+							]
+						},
+						"description": "In the Postman app, review the tests written under the **Tests** tab in the request builder on the top. Send this request, and view the results of the tests under the **Tests** tab in the response viewer on the bottom.\n\n### The `pm.*` API\n\nUse the `pm.*` API to write your test under the **Tests** tab in Postman. The `pm.test()` method accepts 2 parameters. The first parameter is the name of the test, so it's important to give your test a descriptive name to provide more information in case the test fails. The second parameter is a function whereby if any assertions within your function fail, then the test will fail.\n\n```\npm.test(\"Name of the second test\", function () {\n    // make as many assertions as you'd like as part of this test\n    // if any assertion throws an error, this test will fail\n    pm.response.to.have.status(200);\n    pm.response.to.be.ok;\n    pm.response.to.be.json;\n});\n```"
+					},
+					"response": [
+						{
+							"name": "Status",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://postman-echo.com/get?foo1=bar1&foo2=bar2",
+									"protocol": "https",
+									"host": [
+										"postman-echo",
+										"com"
+									],
+									"path": [
+										"get"
+									],
+									"query": [
+										{
+											"key": "foo1",
+											"value": "bar1"
+										},
+										{
+											"key": "foo2",
+											"value": "bar2"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 15 Nov 2018 22:21:20 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1cd-LkUKVugbVYQuMcTU7OTzmp77cMo\""
+								},
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Content-Length",
+									"value": "348"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"args\": {\n        \"foo1\": \"bar1\",\n        \"foo2\": \"bar2\"\n    },\n    \"headers\": {\n        \"x-forwarded-proto\": \"https\",\n        \"host\": \"postman-echo.com\",\n        \"accept\": \"*/*\",\n        \"accept-encoding\": \"gzip, deflate\",\n        \"cache-control\": \"no-cache\",\n        \"cookie\": \"sails.sid=s%3AK8csWt5VZ3Oalv85HiBtffDcrSOJ-RiP.V14RjjJqkOv8%2BLXuHRmZ9l50G8S6eU16yLU%2F3N%2F0dKU\",\n        \"postman-token\": \"c6b9bca5-7369-4da8-a539-6c906d1133f2\",\n        \"user-agent\": \"PostmanRuntime/7.3.0\",\n        \"x-forwarded-port\": \"443\"\n    },\n    \"url\": \"https://postman-echo.com/get?foo1=bar1&foo2=bar2\"\n}"
+						}
+					]
+				},
+				{
+					"name": "pm.expect and pm.response",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Note the difference in the test failure message under the **Test Results** tab when using pm.response vs. pm.expect",
+									"pm.test(\"Status code is 200 - pm.response\", function () {",
+									"    pm.response.to.have.status(201); // written to fail",
+									"});",
+									"",
+									"pm.test(\"Status code is 200 - pm.expect\", function () {",
+									"    pm.expect(pm.response.code).to.equal(201); //written to fail",
+									"});",
+									"",
+									"// Using a 2nd optional parameter with the pm.expect function to create a custom error message ",
+									"pm.test(\"Using a custom error message\", function () {",
+									"    pm.expect(false, 'nooo why fail??').to.be.ok;",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://postman-echo.com/get?foo1=bar1&foo2=bar2",
+							"protocol": "https",
+							"host": [
+								"postman-echo",
+								"com"
+							],
+							"path": [
+								"get"
+							],
+							"query": [
+								{
+									"key": "foo1",
+									"value": "bar1"
+								},
+								{
+									"key": "foo2",
+									"value": "bar2"
+								}
+							]
+						},
+						"description": "Within the second parameter of the `pm.test()` function, you can use either `pm.response()` or `pm.expect()` to make your assertions. \n\nUnder the **Tests** tab in the Postman app, review the tests comparing and contrasting the 2 methods.\n\nThe `pm.expect()` generic assertion function relies on [Chai.js](https://www.chaijs.com/), a BDD / TDD assertion library for node. \n\n```\npm.test(\"Environment to be production\", function () {\n  pm.expect(pm.environment.get(\"env\")).to.equal(\"production\");\n});\n```\n\nYou can also use a 2nd optional parameter with the `pm.expect()` function to create a custom error message.\n\n```\npm.test(\"Using a custom error message\", function () {\n    pm.expect(false, 'nooo why fail??').to.be.ok;\n});\n```\n\nThe `pm.response()` method uses `pm.expect()` under the hood. Using `pm.response()` as your base assertion allows you to receive more specific error messages when debugging. Here are some [`pm.response()` methods](https://www.getpostman.com/docs/v6/postman/scripts/postman_sandbox_api_reference#response-assertion-api-in-test-scripts). Review the error messages under the **Test Results** tab to see the difference."
+					},
+					"response": [
+						{
+							"name": "Status",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://postman-echo.com/get?foo1=bar1&foo2=bar2",
+									"protocol": "https",
+									"host": [
+										"postman-echo",
+										"com"
+									],
+									"path": [
+										"get"
+									],
+									"query": [
+										{
+											"key": "foo1",
+											"value": "bar1"
+										},
+										{
+											"key": "foo2",
+											"value": "bar2"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 15 Nov 2018 22:21:20 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1cd-LkUKVugbVYQuMcTU7OTzmp77cMo\""
+								},
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Content-Length",
+									"value": "348"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"args\": {\n        \"foo1\": \"bar1\",\n        \"foo2\": \"bar2\"\n    },\n    \"headers\": {\n        \"x-forwarded-proto\": \"https\",\n        \"host\": \"postman-echo.com\",\n        \"accept\": \"*/*\",\n        \"accept-encoding\": \"gzip, deflate\",\n        \"cache-control\": \"no-cache\",\n        \"cookie\": \"sails.sid=s%3AK8csWt5VZ3Oalv85HiBtffDcrSOJ-RiP.V14RjjJqkOv8%2BLXuHRmZ9l50G8S6eU16yLU%2F3N%2F0dKU\",\n        \"postman-token\": \"c6b9bca5-7369-4da8-a539-6c906d1133f2\",\n        \"user-agent\": \"PostmanRuntime/7.3.0\",\n        \"x-forwarded-port\": \"443\"\n    },\n    \"url\": \"https://postman-echo.com/get?foo1=bar1&foo2=bar2\"\n}"
+						}
+					]
+				}
+			],
+			"description": "Oh goody. Did you ever think you would get so excited to read this section title?\n\nThe [Postman Sandbox](https://www.getpostman.com/docs/v6/postman/scripts/postman_sandbox) is a JavaScript execution environment that is accessible during pre-request scripts and test scripts. Whatever code you write under the pre-request and test tabs is executed in this sandbox.\n\nAny code that you write under the **Tests** tab in the Postman app will execute after your request. Consequently you have access to the `pm.response` object to make assertions against the actual response -- this is what we call a Postman test.\n\nReview the example tests under the **Tests** tab in the Postman app.\n\n> **Quick tips for syntax**\n- Give each test a descriptive name. When the test fails, this will provide context to the error.\n- Use `pm.response()` as your base assertion where possible to provide more descriptive error messages.\n- Use the optional 2nd parameter in `pm.expect()` to create custom error messages.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "API tests",
+			"item": [
+				{
+					"name": "Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"response is ok\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://postman-echo.com/get?foo1=bar1&foo2=bar2",
+							"protocol": "https",
+							"host": [
+								"postman-echo",
+								"com"
+							],
+							"path": [
+								"get"
+							],
+							"query": [
+								{
+									"key": "foo1",
+									"value": "bar1"
+								},
+								{
+									"key": "foo2",
+									"value": "bar2"
+								}
+							]
+						},
+						"description": "This test is to validate the response status code. This SNIPPET is also available on the right sidebar under `Status code: Code in 200`."
+					},
+					"response": [
+						{
+							"name": "Status",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://postman-echo.com/get?foo1=bar1&foo2=bar2",
+									"protocol": "https",
+									"host": [
+										"postman-echo",
+										"com"
+									],
+									"path": [
+										"get"
+									],
+									"query": [
+										{
+											"key": "foo1",
+											"value": "bar1"
+										},
+										{
+											"key": "foo2",
+											"value": "bar2"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 15 Nov 2018 22:21:20 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1cd-LkUKVugbVYQuMcTU7OTzmp77cMo\""
+								},
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Content-Length",
+									"value": "348"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"args\": {\n        \"foo1\": \"bar1\",\n        \"foo2\": \"bar2\"\n    },\n    \"headers\": {\n        \"x-forwarded-proto\": \"https\",\n        \"host\": \"postman-echo.com\",\n        \"accept\": \"*/*\",\n        \"accept-encoding\": \"gzip, deflate\",\n        \"cache-control\": \"no-cache\",\n        \"cookie\": \"sails.sid=s%3AK8csWt5VZ3Oalv85HiBtffDcrSOJ-RiP.V14RjjJqkOv8%2BLXuHRmZ9l50G8S6eU16yLU%2F3N%2F0dKU\",\n        \"postman-token\": \"c6b9bca5-7369-4da8-a539-6c906d1133f2\",\n        \"user-agent\": \"PostmanRuntime/7.3.0\",\n        \"x-forwarded-port\": \"443\"\n    },\n    \"url\": \"https://postman-echo.com/get?foo1=bar1&foo2=bar2\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Performance",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "This is expected to be sent back as part of response body."
+						},
+						"url": {
+							"raw": "https://postman-echo.com/put",
+							"protocol": "https",
+							"host": [
+								"postman-echo",
+								"com"
+							],
+							"path": [
+								"put"
+							]
+						},
+						"description": "This test is to validate the response time. This SNIPPET is also available on the right sidebar under `Response time is less than 200ms`."
+					},
+					"response": [
+						{
+							"name": "Performance",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "This is expected to be sent back as part of response body."
+								},
+								"url": {
+									"raw": "https://postman-echo.com/put",
+									"protocol": "https",
+									"host": [
+										"postman-echo",
+										"com"
+									],
+									"path": [
+										"put"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 15 Nov 2018 22:21:34 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"235-EkrhuBWZKrBKKgRg6q6rJ7DOZ/o\""
+								},
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "set-cookie",
+									"value": "sails.sid=s%3AUuE9kqyAFxbvBvvH8aX3WEBLXiNgjK7-.ErzxoeVFY7HfTK%2BPjoOs%2BzaP3yU8%2BcM59adz0oo9LlA; Path=/; HttpOnly"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Content-Length",
+									"value": "414"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"args\": {},\n    \"data\": \"This is expected to be sent back as part of response body.\",\n    \"files\": {},\n    \"form\": {},\n    \"headers\": {\n        \"x-forwarded-proto\": \"https\",\n        \"host\": \"postman-echo.com\",\n        \"content-length\": \"58\",\n        \"accept\": \"*/*\",\n        \"accept-encoding\": \"gzip, deflate\",\n        \"cache-control\": \"no-cache\",\n        \"content-type\": \"text/plain\",\n        \"cookie\": \"sails.sid=s%3AK8csWt5VZ3Oalv85HiBtffDcrSOJ-RiP.V14RjjJqkOv8%2BLXuHRmZ9l50G8S6eU16yLU%2F3N%2F0dKU\",\n        \"postman-token\": \"cc394095-6587-4079-bcba-3705b175115d\",\n        \"user-agent\": \"PostmanRuntime/7.3.0\",\n        \"x-forwarded-port\": \"443\"\n    },\n    \"json\": null,\n    \"url\": \"https://postman-echo.com/put\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Data type",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Content-Type is JSON\", function () {",
+									"    pm.response.to.be.json;",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "This is expected to be sent back as part of response body."
+						},
+						"url": {
+							"raw": "https://postman-echo.com/patch",
+							"protocol": "https",
+							"host": [
+								"postman-echo",
+								"com"
+							],
+							"path": [
+								"patch"
+							]
+						},
+						"description": "This test is to validate the content type of the returned content. This SNIPPET is also available on the right sidebar under `Response headers: Content-Type header check`."
+					},
+					"response": [
+						{
+							"name": "Data type",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "This is expected to be sent back as part of response body."
+								},
+								"url": {
+									"raw": "https://postman-echo.com/patch",
+									"protocol": "https",
+									"host": [
+										"postman-echo",
+										"com"
+									],
+									"path": [
+										"patch"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 15 Nov 2018 22:21:46 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"237-50TomUYGT9/V9ahCSqZGYpnnS48\""
+								},
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Content-Length",
+									"value": "410"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"args\": {},\n    \"data\": \"This is expected to be sent back as part of response body.\",\n    \"files\": {},\n    \"form\": {},\n    \"headers\": {\n        \"x-forwarded-proto\": \"https\",\n        \"host\": \"postman-echo.com\",\n        \"content-length\": \"58\",\n        \"accept\": \"*/*\",\n        \"accept-encoding\": \"gzip, deflate\",\n        \"cache-control\": \"no-cache\",\n        \"content-type\": \"text/plain\",\n        \"cookie\": \"sails.sid=s%3AUuE9kqyAFxbvBvvH8aX3WEBLXiNgjK7-.ErzxoeVFY7HfTK%2BPjoOs%2BzaP3yU8%2BcM59adz0oo9LlA\",\n        \"postman-token\": \"ebd30dd5-0044-4665-ae5c-cb31118f1119\",\n        \"user-agent\": \"PostmanRuntime/7.3.0\",\n        \"x-forwarded-port\": \"443\"\n    },\n    \"json\": null,\n    \"url\": \"https://postman-echo.com/patch\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Functional",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Returns 7 char alphanumeric id\", function () {",
+									"    let jsonData = pm.response.json();",
+									"    pm.expect(jsonData.form.someHash).to.match(/^[a-z0-9]{7}$/);",
+									"});",
+									"",
+									"pm.test(\"Returns 15 char alhpanumeric id\", function () {",
+									"    let jsonData = pm.response.json();",
+									"    pm.expect(jsonData.form.secondHash).to.match(/^[a-z0-9]{15}$/);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "someHash",
+									"value": "7654321",
+									"type": "text"
+								},
+								{
+									"key": "secondHash",
+									"value": "987654321asdfgh",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://postman-echo.com/post",
+							"protocol": "https",
+							"host": [
+								"postman-echo",
+								"com"
+							],
+							"path": [
+								"post"
+							]
+						},
+						"description": "This test is written to validate the server performed a function as expected."
+					},
+					"response": [
+						{
+							"name": "Functional",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "someHash",
+											"value": "7654321",
+											"type": "text"
+										},
+										{
+											"key": "secondHash",
+											"value": "987654321asdfgh",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://postman-echo.com/post",
+									"protocol": "https",
+									"host": [
+										"postman-echo",
+										"com"
+									],
+									"path": [
+										"post"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 15 Nov 2018 22:22:08 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"277-9d2jX3MwxfNYN4a9mHbeHYeuEMA\""
+								},
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "set-cookie",
+									"value": "sails.sid=s%3AG3Skk-KwKzhuN9bCFLG38XDvX_n76FY7.SnEQNLnssVB0vIWq0%2Bqn%2FoZhMdvJqAp6Toc8YMDlMhw; Path=/; HttpOnly"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Content-Length",
+									"value": "408"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"args\": {},\n    \"data\": \"\",\n    \"files\": {},\n    \"form\": {\n        \"someHash\": \"7654321\",\n        \"secondHash\": \"987654321asdfgh\"\n    },\n    \"headers\": {\n        \"x-forwarded-proto\": \"https\",\n        \"host\": \"postman-echo.com\",\n        \"content-length\": \"43\",\n        \"accept\": \"*/*\",\n        \"accept-encoding\": \"gzip, deflate\",\n        \"cache-control\": \"no-cache\",\n        \"content-type\": \"application/x-www-form-urlencoded\",\n        \"cookie\": \"sails.sid=s%3AUuE9kqyAFxbvBvvH8aX3WEBLXiNgjK7-.ErzxoeVFY7HfTK%2BPjoOs%2BzaP3yU8%2BcM59adz0oo9LlA\",\n        \"postman-token\": \"e6a118ae-af47-4fb6-ac35-3cf2bcbafd00\",\n        \"user-agent\": \"PostmanRuntime/7.3.0\",\n        \"x-forwarded-port\": \"443\"\n    },\n    \"json\": {\n        \"someHash\": \"7654321\",\n        \"secondHash\": \"987654321asdfgh\"\n    },\n    \"url\": \"https://postman-echo.com/post\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Functional2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"response is ok\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let jsonResponse = pm.response.json();",
+									"",
+									"pm.test(\"Response should be a parsable JSON\", function() {",
+									"    pm.expect(jsonResponse).to.be.ok;",
+									"});",
+									"",
+									"pm.test(\"Response body should be an object\", function() {",
+									"    pm.expect(jsonResponse).to.be.an('object');",
+									"});",
+									"",
+									"pm.test(\"Response body should be in the correct format\", function() {",
+									"    pm.expect(jsonResponse.args).to.be.a('object');",
+									"    pm.expect(jsonResponse.data).to.be.a('string');",
+									"    pm.expect(jsonResponse.files).to.be.a('object');",
+									"    pm.expect(jsonResponse.form).to.be.a('object');",
+									"    pm.expect(jsonResponse.headers).to.be.a('object');",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "This is expected to be sent back as part of response body."
+						},
+						"url": {
+							"raw": "https://postman-echo.com/delete",
+							"protocol": "https",
+							"host": [
+								"postman-echo",
+								"com"
+							],
+							"path": [
+								"delete"
+							]
+						},
+						"description": "Another example of bundling several assertions within a single test, and also of bundling several tests within a try-catch code block."
+					},
+					"response": [
+						{
+							"name": "Functional2",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "This is expected to be sent back as part of response body."
+								},
+								"url": {
+									"raw": "https://postman-echo.com/delete",
+									"protocol": "https",
+									"host": [
+										"postman-echo",
+										"com"
+									],
+									"path": [
+										"delete"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 15 Nov 2018 22:22:22 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"236-unqr/LuiPP07B85WHuciASf+YdA\""
+								},
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "set-cookie",
+									"value": "sails.sid=s%3Aa9JaDxhKoLl3zyptDL3Vbo-kXgiIoqOY.o566AhO0IGGXbdop127kZi0Xq9bHd0q3RjrHgs2G9c4; Path=/; HttpOnly"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Content-Length",
+									"value": "415"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"args\": {},\n    \"data\": \"This is expected to be sent back as part of response body.\",\n    \"files\": {},\n    \"form\": {},\n    \"headers\": {\n        \"x-forwarded-proto\": \"https\",\n        \"host\": \"postman-echo.com\",\n        \"content-length\": \"58\",\n        \"accept\": \"*/*\",\n        \"accept-encoding\": \"gzip, deflate\",\n        \"cache-control\": \"no-cache\",\n        \"content-type\": \"text/plain\",\n        \"cookie\": \"sails.sid=s%3AG3Skk-KwKzhuN9bCFLG38XDvX_n76FY7.SnEQNLnssVB0vIWq0%2Bqn%2FoZhMdvJqAp6Toc8YMDlMhw\",\n        \"postman-token\": \"a26a6cbb-abb4-4e8b-8a1e-4ba63450afcb\",\n        \"user-agent\": \"PostmanRuntime/7.3.0\",\n        \"x-forwarded-port\": \"443\"\n    },\n    \"json\": null,\n    \"url\": \"https://postman-echo.com/delete\"\n}"
+						}
+					]
+				},
+				{
+					"name": "JSON schema v4 validation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var schema = {",
+									"  \"items\": {",
+									"    \"type\": \"boolean\"",
+									"  }",
+									"};",
+									"",
+									"var data1 = [true, false];",
+									"var data2 = [true, 123];",
+									"",
+									"pm.test('Schema is valid', function() {",
+									"  pm.expect(tv4.validate(data1, schema)).to.be.true;",
+									"//   pm.expect(tv4.validate(data2, schema)).to.be.true; // this statement would not be true",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://postman-echo.com/get?foo1=bar1&foo2=bar2",
+							"protocol": "https",
+							"host": [
+								"postman-echo",
+								"com"
+							],
+							"path": [
+								"get"
+							],
+							"query": [
+								{
+									"key": "foo1",
+									"value": "bar1"
+								},
+								{
+									"key": "foo2",
+									"value": "bar2"
+								}
+							]
+						},
+						"description": "A schema is simply a declaration describing the structure of data. Some teams use a specific schema and would like to validate their server responses against this schema. You can define a custom schema, and validate your your server responses against this schema.\n\nOne of the API tests that we previously talked about is validating that the response payloads returned from the server are well-formed. You can do that by making assertions that elements in the response match your expectations. \n\nReview the test written under the **Tests** tab to validate that response payloads returned from the server are well-formed. \n\nThis example uses [Tiny Validator for JSON Schema v4](http://geraintluff.github.io/tv4/). The Postman sandbox offers a built-in tv4 validator to simplify your assertions. Use [json-schema](http://json-schema.org/) [draft v4](http://json-schema.org/latest/json-schema-core.html) to validate simple values and complex objects using a rich [validation vocabulary](http://json-schema.org/latest/json-schema-validation.html) ([examples](http://json-schema.org/examples.html)).\n\n"
+					},
+					"response": [
+						{
+							"name": "JSON schema v4",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://postman-echo.com/get?foo1=bar1&foo2=bar2",
+									"protocol": "https",
+									"host": [
+										"postman-echo",
+										"com"
+									],
+									"path": [
+										"get"
+									],
+									"query": [
+										{
+											"key": "foo1",
+											"value": "bar1"
+										},
+										{
+											"key": "foo2",
+											"value": "bar2"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 15 Nov 2018 22:26:56 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1c7-KZYP4szBTzxKQXHzZuUzeRc6eu8\""
+								},
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "set-cookie",
+									"value": "sails.sid=s%3Azdvp_jvbvOB5mzzWKmS_7y6miNWal_a6.J5pGiESESIJ0CZLwvG9rF5Vsk4deBwxJhwo9E9JS4o8; Path=/; HttpOnly"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Content-Length",
+									"value": "342"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"args\": {\n        \"foo1\": \"bar1\",\n        \"foo2\": \"bar2\"\n    },\n    \"headers\": {\n        \"x-forwarded-proto\": \"https\",\n        \"host\": \"postman-echo.com\",\n        \"accept\": \"*/*\",\n        \"accept-encoding\": \"gzip, deflate\",\n        \"cache-control\": \"no-cache\",\n        \"cookie\": \"sails.sid=s%3AwJjqwuZdKqKOiQ9FVnzMr8QoFaPFxpfD.ldt8sflpZLQkRbE1yyJtcIZIuirLfn4yFsVxtvFolWY\",\n        \"postman-token\": \"9dd498fe-4233-4512-a506-974f85cab10d\",\n        \"user-agent\": \"PostmanRuntime/7.3.0\",\n        \"x-forwarded-port\": \"443\"\n    },\n    \"url\": \"https://postman-echo.com/get?foo1=bar1&foo2=bar2\"\n}"
+						}
+					]
+				},
+				{
+					"name": "SQL injection security check",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Does not return password\", function () {",
+									"    let jsonData = pm.response.json();",
+									"    pm.expect(jsonData.form.customerName).to.not.include(\"examplePassword\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "customerName",
+									"value": "' or '1'='1",
+									"description": " String query = \"SELECT account_balance FROM user_data WHERE user_name = \"\n   + request.getParameter(\"customerName\");",
+									"type": "text"
+								},
+								{
+									"key": "anotherAttack",
+									"value": "' or 1=1; drop table myTable; --",
+									"description": "Probably best not to do this one in production, or at all, except for demonstration purposes",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "https://postman-echo.com/post",
+							"protocol": "https",
+							"host": [
+								"postman-echo",
+								"com"
+							],
+							"path": [
+								"post"
+							]
+						},
+						"description": "Hackers can attack your web server by injecting malicious strings as a request parameter. If your server is not handling user input properly, these strings can be interpreted by your server as SQL commands that result in leaking sensitive information or general mayhem.\n\nMore resources [here](https://www.owasp.org/index.php/SQL_Injection_Prevention_Cheat_Sheet)."
+					},
+					"response": [
+						{
+							"name": "SQL injection security check",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "customerName",
+											"value": "' or '1'='1",
+											"description": " String query = \"SELECT account_balance FROM user_data WHERE user_name = \"\n   + request.getParameter(\"customerName\");",
+											"type": "text"
+										},
+										{
+											"key": "anotherAttack",
+											"value": "' or 1=1; drop table myTable; --",
+											"description": "Probably best not to do this one in production, or at all, except for demonstration purposes",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "https://postman-echo.com/post",
+									"protocol": "https",
+									"host": [
+										"postman-echo",
+										"com"
+									],
+									"path": [
+										"post"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 15 Nov 2018 22:54:34 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"249-6aeADdjaahUu4RmO474pv4LUCJk\""
+								},
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "set-cookie",
+									"value": "sails.sid=s%3AqIFh_GxNGvPg8xIoXG3SXa3q2FttuGK_.CEzJcRVX9GQwHnXPKthJmnkwV90OP23VXhuGizFFuXE; Path=/; HttpOnly"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Content-Length",
+									"value": "403"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"args\": {},\n    \"data\": \"\",\n    \"files\": {},\n    \"form\": {\n        \"customerName\": \"' or '1'='1\"\n    },\n    \"headers\": {\n        \"x-forwarded-proto\": \"https\",\n        \"host\": \"postman-echo.com\",\n        \"content-length\": \"38\",\n        \"accept\": \"*/*\",\n        \"accept-encoding\": \"gzip, deflate\",\n        \"cache-control\": \"no-cache\",\n        \"content-type\": \"application/x-www-form-urlencoded\",\n        \"cookie\": \"sails.sid=s%3A7tFj5KB_lujWMK1xoroPV_xSKkRDxR1W.qUauhME8lGY%2FnBlCT4iVRCs0badee7%2Fmen9XorL%2FJ4s\",\n        \"postman-token\": \"031152dc-59c7-4529-8f8a-29faf9f41afe\",\n        \"user-agent\": \"PostmanRuntime/7.3.0\",\n        \"x-forwarded-port\": \"443\"\n    },\n    \"json\": {\n        \"customerName\": \"' or '1'='1\"\n    },\n    \"url\": \"https://postman-echo.com/post\"\n}"
+						}
+					]
+				}
+			],
+			"description": "This folder contains examples of testing a single HTTP API request.\n\nIn the Postman app, under the **Tests** tab of the request builder for each request, notice the test(s) written to validate specific assertions. Some of these tests are available as a SNIPPET on the right sidebar.\n\nSend each request to see the results under the **Tests** tab in the response viewer.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Integration tests",
+			"item": [
+				{
+					"name": "Using variables",
+					"item": [
+						{
+							"name": "Bitcoin exchange rate",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// let's write code that extract information from the response, and then save it as an environment variable, so that we can use it in our next request.",
+											"",
+											"let jsonData = pm.response.json();",
+											"pm.environment.set(\"bitcoinRate\", jsonData.bpi.USD.rate);",
+											"",
+											"pm.test(\"Response includes specified elements\", function () {",
+											"    let response = pm.response.json();",
+											"    pm.expect(response).to.have.ownProperty(\"chartName\"); ",
+											"    pm.expect(response.chartName).to.equal(\"Bitcoin\");",
+											"});",
+											"",
+											"// you can also use global, collection, and session variables",
+											"// you can also set local variables which are available throughout a collection run",
+											"pm.variables.set(\"exampleLocalVariable\", \"this-example-of-a-local-variable\");"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api.coindesk.com/v1/bpi/currentprice.json",
+									"protocol": "https",
+									"host": [
+										"api",
+										"coindesk",
+										"com"
+									],
+									"path": [
+										"v1",
+										"bpi",
+										"currentprice.json"
+									]
+								},
+								"description": "CoinDesk provides a simple API to make its [Bitcoin Price Index (BPI)](https://www.coindesk.com/price/) data programmatically available to others. Data is returned in JSON format.\n\nRead more about the [Coindesk API](https://www.coindesk.com/api/).\n\nUnder the **Tests** tab in the Postman app, see how we extract data from the response, save it as a variable, so that we can use the information in subsequent requests. We will be using an environment to save this information. Make sure you have created and selected [an environment](https://www.getpostman.com/docs/v6/postman/environments_and_globals/intro_to_environments_and_globals), and then send this request."
+							},
+							"response": [
+								{
+									"name": "Bitcoin exchange rate",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "https://api.coindesk.com/v1/bpi/currentprice.json",
+											"protocol": "https",
+											"host": [
+												"api",
+												"coindesk",
+												"com"
+											],
+											"path": [
+												"v1",
+												"bpi",
+												"currentprice.json"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "script",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/javascript"
+										},
+										{
+											"key": "Content-Length",
+											"value": "672"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "max-age=15"
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 19 Nov 2018 20:25:22 GMT"
+										},
+										{
+											"key": "Expires",
+											"value": "Mon, 19 Nov 2018 20:26:07 UTC"
+										},
+										{
+											"key": "Server",
+											"value": "nginx/1.12.1"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Fat-Free Framework"
+										},
+										{
+											"key": "Age",
+											"value": "2"
+										},
+										{
+											"key": "X-Cache",
+											"value": "Hit from cloudfront"
+										},
+										{
+											"key": "Via",
+											"value": "1.1 3566cbcd49f71967b52a565888e4d272.cloudfront.net (CloudFront)"
+										},
+										{
+											"key": "X-Amz-Cf-Id",
+											"value": "sS2RrgR1BnUjWPD6l_WQw-3GNk2xW7nbM2FMEISFO2c06_P3TjUEwQ=="
+										}
+									],
+									"cookie": [],
+									"body": "{\"time\":{\"updated\":\"Nov 19, 2018 20:25:00 UTC\",\"updatedISO\":\"2018-11-19T20:25:00+00:00\",\"updateduk\":\"Nov 19, 2018 at 20:25 GMT\"},\"disclaimer\":\"This data was produced from the CoinDesk Bitcoin Price Index (USD). Non-USD currency data converted using hourly conversion rate from openexchangerates.org\",\"chartName\":\"Bitcoin\",\"bpi\":{\"USD\":{\"code\":\"USD\",\"symbol\":\"&#36;\",\"rate\":\"5,003.4550\",\"description\":\"United States Dollar\",\"rate_float\":5003.455},\"GBP\":{\"code\":\"GBP\",\"symbol\":\"&pound;\",\"rate\":\"3,892.1176\",\"description\":\"British Pound Sterling\",\"rate_float\":3892.1176},\"EUR\":{\"code\":\"EUR\",\"symbol\":\"&euro;\",\"rate\":\"4,368.2164\",\"description\":\"Euro\",\"rate_float\":4368.2164}}}"
+								}
+							]
+						},
+						{
+							"name": "Echo the exchange rate",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://postman-echo.com/get?foo1={{bitcoinRate}}",
+									"protocol": "https",
+									"host": [
+										"postman-echo",
+										"com"
+									],
+									"path": [
+										"get"
+									],
+									"query": [
+										{
+											"key": "foo1",
+											"value": "{{bitcoinRate}}",
+											"description": "Set this variable in the previous request"
+										}
+									]
+								},
+								"description": "This request will use information saved to a variable in a previous request.\n\nYou can send the request to view this information echoed back in the response. Alternatively, you can click the **Quick Look** in the top right [to verify the environment variable has been set](https://www.getpostman.com/docs/v5/postman/environments_and_globals/manage_environments#editing-an-active-environment)."
+							},
+							"response": [
+								{
+									"name": "Status",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "https://postman-echo.com/get?foo1=bar1&foo2=bar2",
+											"protocol": "https",
+											"host": [
+												"postman-echo",
+												"com"
+											],
+											"path": [
+												"get"
+											],
+											"query": [
+												{
+													"key": "foo1",
+													"value": "bar1"
+												},
+												{
+													"key": "foo2",
+													"value": "bar2"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 15 Nov 2018 22:21:20 GMT"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"1cd-LkUKVugbVYQuMcTU7OTzmp77cMo\""
+										},
+										{
+											"key": "Server",
+											"value": "nginx"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Content-Length",
+											"value": "348"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"args\": {\n        \"foo1\": \"bar1\",\n        \"foo2\": \"bar2\"\n    },\n    \"headers\": {\n        \"x-forwarded-proto\": \"https\",\n        \"host\": \"postman-echo.com\",\n        \"accept\": \"*/*\",\n        \"accept-encoding\": \"gzip, deflate\",\n        \"cache-control\": \"no-cache\",\n        \"cookie\": \"sails.sid=s%3AK8csWt5VZ3Oalv85HiBtffDcrSOJ-RiP.V14RjjJqkOv8%2BLXuHRmZ9l50G8S6eU16yLU%2F3N%2F0dKU\",\n        \"postman-token\": \"c6b9bca5-7369-4da8-a539-6c906d1133f2\",\n        \"user-agent\": \"PostmanRuntime/7.3.0\",\n        \"x-forwarded-port\": \"443\"\n    },\n    \"url\": \"https://postman-echo.com/get?foo1=bar1&foo2=bar2\"\n}"
+								}
+							]
+						}
+					],
+					"description": "The 2 requests in this sub-folder demonstrate how you can use variables to save information that can be used in subsequent requests. Let's see how to do this with an [environment variable](https://www.getpostman.com/docs/v6/postman/environments_and_globals/intro_to_environments_and_globals).\n\n### Considerations for using variables\nIf you're planning to automate your testing and / or run your test suite as part of your Continuous Integration / Continuous Delivery (CI/CD) pipeline, there's some considerations for how you handle your [variables](https://www.getpostman.com/docs/v6/postman/environments_and_globals/variables).\n\n![[variable scopes](https://i.imgur.com/cQFnvSZ.png)](https://i.imgur.com/cQFnvSZ.png)\n\n* [Local variables](https://community.getpostman.com/t/the-postman-cheatsheet-quick-reference-guide/1054/7?u=joyce) can be used to save a temporary state within a request and also throughout a collection run. Using a local variable means you won't have to unset the variable during teardown or pollute your namespace.\n* [Environment variables](https://www.getpostman.com/docs/v6/postman/environments_and_globals/manage_environments) are portable and can be used to store server configuration elements. In this way, you can easily swap out the configuration for your staging environment with your production environment when necessary.\n* [Collection variables](https://www.getpostman.com/docs/v6/postman/environments_and_globals/variables#defining-collection-variables) are specific to a single collection.\n* [Global variables](https://www.getpostman.com/docs/v6/postman/environments_and_globals/manage_globals) are specific to a single workspace. In a personal workspace, your `username` might never change. In a team workspace, you might have dummy user credentials that are shared across the team.\n* [Session variables](https://www.getpostman.com/docs/v6/postman/environments_and_globals/sessions) are available for global, collection, and environment variables to maintain variable values within your current session. In this way, you can keep your mutations private and not overwrite any team values.\n\n### Persisting variable values\nVariables can be used to save and update a value throughout a collection run. What if you want to use variables to save state across different runs of the same collection?\n\nSay you want to save the highest ranked player on a leaderboard as an environment value. The behavior of persisting variable values after a collection has been run may differ depending on how you run your collection.\n\n* In the Postman app [collection runner](https://www.getpostman.com/docs/v6/postman/collection_runs/intro_to_collection_runs), the default setting is that variables are NOT persisted. That means at the end of a collection run, any variable values that you updated throughout the collection run will be reset to their initial values. There is a checkbox to `Keep variable values` that you can select as an option in the collection runner window before you run the collection.\n* With [Newman](https://www.getpostman.com/docs/v6/postman/collection_runs/command_line_integration_with_newman) and [Postman monitors](https://www.getpostman.com/docs/v6/postman/monitors/intro_monitors), the default setting is that variables are NOT persisted. In this case, there's no built-in option to persist your values. However, you can use the [Postman API](https://docs.api.getpostman.com/) to [update your environment](https://docs.api.getpostman.com/#6517e0d6-3bc3-3da5-ab57-7a578a8504ce), running this request as part of your collection.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Scenario",
+					"item": [
+						{
+							"name": "Fetch a list of items",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response is an array\", function () {",
+											"    pm.response.to.be.an.array; ",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{example_api_key}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3002/items",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3002",
+									"path": [
+										"items"
+									]
+								},
+								"description": "A `GET` to the `/items` endpoint allows your application to fetch a list of all items.\n\nLook under **Examples** to view an example response."
+							},
+							"response": [
+								{
+									"name": "Fetch a list of items",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"type": "text",
+												"value": "Bearer {{example_api_key}}"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "http://localhost:3002/items?Authorization=Bearer {{example_api_key}}&Content-type=application/json",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3002",
+											"path": [
+												"items"
+											],
+											"query": [
+												{
+													"key": "Authorization",
+													"value": "Bearer {{example_api_key}}"
+												},
+												{
+													"key": "Content-type",
+													"value": "application/json"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [],
+									"cookie": [],
+									"body": "[\n    {\n        \"item_id\": \"304829\",\n        \"name\": \"delicata\",\n        \"price\": \"0.79\",\n        \"unit\": \"lb\",\n        \"currency\": \"USD\"\n    },\n    {\n        \"item_id\": \"304830\",\n        \"name\": \"butternut\",\n        \"price\": \"0.59\",\n        \"unit\": \"lb\",\n        \"currency\": \"USD\"\n    },\n    {\n        \"item_id\": \"304831\",\n        \"name\": \"acorn\",\n        \"price\": \"0.49\",\n        \"unit\": \"lb\",\n        \"currency\": \"USD\"\n    }\n]"
+								}
+							]
+						},
+						{
+							"name": "Create a new item",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"// save the `item_id` returned in the response as an environment variable",
+											"let jsonResponse = pm.response.json();",
+											"pm.environment.set(\"itemId\", jsonResponse.item_id);",
+											"pm.environment.set(\"itemName\", jsonResponse.name);",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{example_api_key}}"
+									},
+									{
+										"key": "Content-type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "kabocha",
+											"type": "text"
+										},
+										{
+											"key": "price",
+											"value": "0.89",
+											"type": "text"
+										},
+										{
+											"key": "unit",
+											"value": "lb",
+											"type": "text"
+										},
+										{
+											"key": "currency",
+											"value": "USD",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3002/items",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3002",
+									"path": [
+										"items"
+									]
+								},
+								"description": "A `POST` to the `/items` endpoint allows your application to create a new item. A successful response will return an `item_id`, which can be saved as an environment variable to be used in subsequent requests.\n\nLook under **Examples** to view an example response."
+							},
+							"response": [
+								{
+									"name": "Create a new item",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"type": "text",
+												"value": "Bearer {{example_api_key}}"
+											},
+											{
+												"key": "Content-type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "name",
+													"value": "kabocha",
+													"type": "text"
+												},
+												{
+													"key": "price",
+													"value": "0.89",
+													"type": "text"
+												},
+												{
+													"key": "unit",
+													"value": "lb",
+													"type": "text"
+												},
+												{
+													"key": "currency",
+													"value": "USD",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "http://localhost:3002/items?Authorization=Bearer {{example_api_key}}&Content-type=application/json",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3002",
+											"path": [
+												"items"
+											],
+											"query": [
+												{
+													"key": "Authorization",
+													"value": "Bearer {{example_api_key}}"
+												},
+												{
+													"key": "Content-type",
+													"value": "application/json"
+												}
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [],
+									"cookie": [],
+									"body": "{\n    \"item_id\": \"304832\",\n    \"name\": \"kabocha\",\n    \"price\": \"0.89\",\n    \"unit\": \"lb\",\n    \"currency\": \"USD\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Verify new item exists",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Item name is correct\", function () {",
+											"    let response = pm.response.json();",
+											"    let savedItemName = pm.environment.get(\"itemName\");",
+											"    pm.expect(response.name).to.be(savedItemName);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{example_api_key}}"
+									},
+									{
+										"key": "Content-type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3002/items/{{itemId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3002",
+									"path": [
+										"items",
+										"{{itemId}}"
+									]
+								},
+								"description": "A `GET` to the `/items/:itemId` endpoint allows your application to retrieve details about the specified item.\n\nLook under **Examples** to view an example response."
+							},
+							"response": [
+								{
+									"name": "Verify new item exists",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"type": "text",
+												"value": "Bearer {{example_api_key}}"
+											},
+											{
+												"key": "Content-type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "http://localhost:3002/items/{{itemId}}?Authorization=Bearer {{example_api_key}}&Content-type=application/json",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3002",
+											"path": [
+												"items",
+												"{{itemId}}"
+											],
+											"query": [
+												{
+													"key": "Authorization",
+													"value": "Bearer {{example_api_key}}"
+												},
+												{
+													"key": "Content-type",
+													"value": "application/json"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [],
+									"cookie": [],
+									"body": "{\n    \"item_id\": \"304832\",\n    \"name\": \"kabocha\",\n    \"price\": \"0.89\",\n    \"unit\": \"lb\",\n    \"currency\": \"USD\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Add item to cart",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"pm.test(\"Successful add status response\", function () {",
+											"    let response = pm.response.json();",
+											"    pm.expect(response.status).to.equal(\"item added\");",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{example_api_key}}"
+									},
+									{
+										"key": "Content-type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:3002/{{memberId}}/cart",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3002",
+									"path": [
+										"{{memberId}}",
+										"cart"
+									]
+								},
+								"description": "A `POST` to the `/:memberId/cart` endpoint allows your application to add an item to the specified member's cart. \n\nLook under **Examples** to view an example response."
+							},
+							"response": [
+								{
+									"name": "Add item to cart",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"type": "text",
+												"value": "Bearer {{example_api_key}}"
+											},
+											{
+												"key": "Content-type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "http://localhost:3002/{{memberId}}/cart?Authorization=Bearer {{example_api_key}}&Content-type=application/json",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3002",
+											"path": [
+												"{{memberId}}",
+												"cart"
+											],
+											"query": [
+												{
+													"key": "Authorization",
+													"value": "Bearer {{example_api_key}}"
+												},
+												{
+													"key": "Content-type",
+													"value": "application/json"
+												}
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [],
+									"cookie": [],
+									"body": "{\n\t\"cart_id\": \"109\",\n\t\"status\": \"item added\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete item from cart",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Successful delete status response\", function () {",
+											"    let response = pm.response.json();",
+											"    pm.expect(response.status).to.equal(\"item removed\");",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{example_api_key}}"
+									},
+									{
+										"key": "Content-type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:3002/{{memberId}}/cart/{{itemId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3002",
+									"path": [
+										"{{memberId}}",
+										"cart",
+										"{{itemId}}"
+									]
+								},
+								"description": "A `DELETE` to the `/:memberId/cart/:itemId` endpoint allows your application to delete an item to the specified member's cart.\n\nLook under **Examples** to view an example response."
+							},
+							"response": [
+								{
+									"name": "Delete item from cart",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"type": "text",
+												"value": "Bearer {{example_api_key}}"
+											},
+											{
+												"key": "Content-type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "http://localhost:3002/{{memberId}}/cart/{{itemId}}?Authorization=Bearer {{example_api_key}}&Content-type=application/json",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3002",
+											"path": [
+												"{{memberId}}",
+												"cart",
+												"{{itemId}}"
+											],
+											"query": [
+												{
+													"key": "Authorization",
+													"value": "Bearer {{example_api_key}}"
+												},
+												{
+													"key": "Content-type",
+													"value": "application/json"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [],
+									"cookie": [],
+									"body": "{\n\t\"cart_id\": \"109\",\n\t\"status\": \"item removed\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Verify item removed",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Cart does not include deleted item\", function () {",
+											"    let savedItemId = pm.environment.get(\"itemId\");",
+											"    pm.response.to.not.include(savedItemId);    ",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{example_api_key}}"
+									},
+									{
+										"key": "Content-type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3002/{{memberId}}/cart",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3002",
+									"path": [
+										"{{memberId}}",
+										"cart"
+									]
+								},
+								"description": "A `GET` to the `:memberId/cart` endpoint allows you to retrieve a list of all items in the specified member's cart.\n\nLook under **Examples** to view an example response."
+							},
+							"response": [
+								{
+									"name": "Verify item removed",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"type": "text",
+												"value": "Bearer {{example_api_key}}"
+											},
+											{
+												"key": "Content-type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "http://localhost:3002/{{memberId}}/cart?Authorization=Bearer {{examples_api_key}}&Content-type=application/json",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3002",
+											"path": [
+												"{{memberId}}",
+												"cart"
+											],
+											"query": [
+												{
+													"key": "Authorization",
+													"value": "Bearer {{examples_api_key}}"
+												},
+												{
+													"key": "Content-type",
+													"value": "application/json"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [],
+									"cookie": [],
+									"body": "{\n\t\"member_id\": \"5489098\",\n\t\"cart_id\": \"109\",\n\t\"items\": [\n\t\t{\n\t\t\t\"item_id\": \"304832\",\n\t\t\t\"quantity\": \"1\"\n\t\t},\n\t\t{\n\t\t\t\"item_id\": \"304836\",\n\t\t\t\"quantity\": \"2\"\n\t\t}\n\t],\n\t\"subtotal\": \"2.09\",\n\t\"tax\": \"0.03\",\n\t\"freight\": \"0.05\",\n\t\"total\": \"2.27\"\n}"
+								}
+							]
+						}
+					],
+					"description": "The requests in this sub-folder demonstrate how your scenario tests can be structured.\n\nExecuting the requests in this folder runs your API tests sequentially mirroring typical user behavior. \n\n# Control your workflow\nYou can also use the `postman.setNextRequest()` method to [control your workflow](https://www.getpostman.com/docs/v6/postman/scripts/branching_and_looping) and create more sophisticated testing logic.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Service Consumer → Service Provider #contract",
+					"item": [
+						{
+							"name": "Setup",
+							"item": [
+								{
+									"name": "Create User",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"type": "text/javascript",
+												"exec": [
+													"const response = pm.response.json();",
+													"",
+													"pm.environment.set(\"jwt_token\", response.access_token);"
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"username\": \"user\",\n\t\"password\": \"password\",\n\t\"extra\": \"blerg\"\n}"
+										},
+										"url": {
+											"raw": "http://localhost:3001/users",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3001",
+											"path": [
+												"users"
+											]
+										},
+										"description": "The body must have `username`, `password` and `extra`. It returns `id_token` and `access_token` which are signed with the secret located at the `config.json` file. The `id_token` will contain the `username` and the `extra` information sent, while the `access_token` will contain the `audience`, `jti`, `issuer` and `scope`."
+									},
+									"response": [
+										{
+											"name": "Successful response",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"username\": \"user\",\n\t\"password\": \"password\",\n\t\"extra\": \"blerg\"\n}"
+												},
+												"url": {
+													"raw": "http://localhost:3001/users",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "3001",
+													"path": [
+														"users"
+													]
+												}
+											},
+											"status": "Created",
+											"code": 201,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*",
+													"name": "Access-Control-Allow-Origin",
+													"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive",
+													"name": "Connection",
+													"description": "Options that are desired for the connection"
+												},
+												{
+													"key": "Content-Length",
+													"value": "523",
+													"name": "Content-Length",
+													"description": "The length of the response body in octets (8-bit bytes)"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8",
+													"name": "Content-Type",
+													"description": "The mime type of this content"
+												},
+												{
+													"key": "Date",
+													"value": "Thu, 13 Sep 2018 20:42:22 GMT",
+													"name": "Date",
+													"description": "The date and time that the message was sent"
+												},
+												{
+													"key": "ETag",
+													"value": "W/\"20b-/ULiXCB/BjV9XztkCrB50vUZugI\"",
+													"name": "ETag",
+													"description": "An identifier for a specific version of a resource, often a message digest"
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "Express",
+													"name": "X-Powered-By",
+													"description": "Specifies the technology (ASP.NET, PHP, JBoss, e.g.) supporting the web application (version details are often in X-Runtime, X-Version, or X-AspNet-Version)"
+												}
+											],
+											"cookie": [],
+											"body": "{\"id_token\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzZXIiLCJleHRyYSI6ImJsZXJnIiwiaWQiOjIsImlhdCI6MTUzNjg3MTM0MiwiZXhwIjoxNTM2ODg5MzQyfQ.OWx1l_oDyuC7Oi0uO-iglA9quxxZ2ksX-BT2lqYjojY\",\"access_token\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2dvbnRvLmNvbSIsImF1ZCI6Im5vZGVqcy1qd3QtYXV0aCIsImV4cCI6MTUzNjg3NDk0Miwic2NvcGUiOiJmdWxsX2FjY2VzcyIsInN1YiI6ImxhbGFsYW5kfGdvbnRvIiwianRpIjoiazJ4QXBOVVExWm1tQWdtcSIsImFsZyI6IkhTMjU2IiwiaWF0IjoxNTM2ODcxMzQyfQ.RTNmeyb-6mZpFEqQz0V194nKax91qJk5GN01u3hpA-Q\"}"
+										}
+									]
+								},
+								{
+									"name": "Create Session",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"type": "text/javascript",
+												"exec": [
+													"const response = pm.response.json();",
+													"",
+													"pm.environment.set(\"jwt_token\", response.access_token);"
+												]
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"username\": \"user\",\n\t\"password\": \"password\"\n}"
+										},
+										"url": {
+											"raw": "http://localhost:3001/sessions/create",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3001",
+											"path": [
+												"sessions",
+												"create"
+											]
+										},
+										"description": "The body must have `username` and `password`. It returns `id_token` and `access_token` are signed with the secret located at the `config.json` file. The `id_token` will contain the `username` and the `extra` information sent, while the `access_token` will contain the `audience`, `jti`, `issuer` and `scope`."
+									},
+									"response": [
+										{
+											"name": "Successful response",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"username\": \"user\",\n\t\"password\": \"password\"\n}"
+												},
+												"url": {
+													"raw": "http://localhost:3001/sessions/create",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "3001",
+													"path": [
+														"sessions",
+														"create"
+													]
+												}
+											},
+											"status": "Created",
+											"code": 201,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*",
+													"name": "Access-Control-Allow-Origin",
+													"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive",
+													"name": "Connection",
+													"description": "Options that are desired for the connection"
+												},
+												{
+													"key": "Content-Length",
+													"value": "523",
+													"name": "Content-Length",
+													"description": "The length of the response body in octets (8-bit bytes)"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8",
+													"name": "Content-Type",
+													"description": "The mime type of this content"
+												},
+												{
+													"key": "Date",
+													"value": "Thu, 13 Sep 2018 20:44:42 GMT",
+													"name": "Date",
+													"description": "The date and time that the message was sent"
+												},
+												{
+													"key": "ETag",
+													"value": "W/\"20b-OddoFD1q11lfCJ55kXMN6jd5YHE\"",
+													"name": "ETag",
+													"description": "An identifier for a specific version of a resource, often a message digest"
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "Express",
+													"name": "X-Powered-By",
+													"description": "Specifies the technology (ASP.NET, PHP, JBoss, e.g.) supporting the web application (version details are often in X-Runtime, X-Version, or X-AspNet-Version)"
+												}
+											],
+											"cookie": [],
+											"body": "{\"id_token\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzZXIiLCJleHRyYSI6ImJsZXJnIiwiaWQiOjIsImlhdCI6MTUzNjg3MTQ4MiwiZXhwIjoxNTM2ODg5NDgyfQ.ssLIBEyAF73iQQH7byi6OiXfa1r467wKx_VmfhjJSeY\",\"access_token\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2dvbnRvLmNvbSIsImF1ZCI6Im5vZGVqcy1qd3QtYXV0aCIsImV4cCI6MTUzNjg3NTA4Miwic2NvcGUiOiJmdWxsX2FjY2VzcyIsInN1YiI6ImxhbGFsYW5kfGdvbnRvIiwianRpIjoiRVJmSVVoR2hmaUxNbDFFUyIsImFsZyI6IkhTMjU2IiwiaWF0IjoxNTM2ODcxNDgyfQ.isN1Pl40xa8Ml_8Alh6kcrqO6JvXCkXdCBx0IFeFzCc\"}"
+										}
+									]
+								}
+							],
+							"description": "Sometimes you need to do some initial groundwork to prepare your test environment for your test cases. Perhaps you're generating new users, creating authentication tokens, or simply initializing variables.\n\nYou can handle setup and teardown as separate requests occurring respectively before and after your tests. You can also handle setup and teardown for _each_ request as pre-request or test scripts.",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							]
+						},
+						{
+							"name": "Tests",
+							"item": [
+								{
+									"name": "Protected Random Quote",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Response time is less than 200ms\", function () {",
+													"    pm.expect(pm.response.responseTime).to.be.below(200);",
+													"});",
+													"",
+													"pm.test(\"Response is a string\", function () {",
+													"    pm.response.to.be.string;",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{jwt_token}}",
+												"description": "Replace {{jwt_token}} with your JWT token."
+											}
+										],
+										"url": {
+											"raw": "http://localhost:3001/api/protected/random-quote",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3001",
+											"path": [
+												"api",
+												"protected",
+												"random-quote"
+											]
+										},
+										"description": "It returns a String with a Random quote from Chuck Norris. It requires authentication. \n\nThe JWT - `access_token` must be sent on the `Authorization` header as follows: `Authorization: Bearer {jwt}`"
+									},
+									"response": [
+										{
+											"name": "Protected Random Quote",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Authorization",
+														"value": "Bearer {{jwt_token}}",
+														"description": "Replace {{jwt_token}} with your JWT token."
+													}
+												],
+												"url": {
+													"raw": "http://localhost:3001/api/protected/random-quote",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "3001",
+													"path": [
+														"api",
+														"protected",
+														"random-quote"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "html",
+											"header": [
+												{
+													"key": "X-Powered-By",
+													"value": "Express"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												},
+												{
+													"key": "Content-Type",
+													"value": "text/html; charset=utf-8"
+												},
+												{
+													"key": "Content-Length",
+													"value": "65"
+												},
+												{
+													"key": "ETag",
+													"value": "W/\"41-h+wcZh2eGYail4Kdu43XrGBYjS4\""
+												},
+												{
+													"key": "Date",
+													"value": "Fri, 16 Nov 2018 23:28:37 GMT"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												}
+											],
+											"cookie": [],
+											"body": "Chuck Norris's tears cure cancer ..... too bad he has never cried"
+										}
+									]
+								}
+							],
+							"description": "Automating the setup and teardown allows you to quickly re-create your test conditions in a consistent way so that you can repeat your tests. Creating repeatable tests allows you to more efficiently tweak other variables, isolate the system under test, and observe the results in a scalable manner.",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							]
+						},
+						{
+							"name": "Teardown",
+							"item": [
+								{
+									"name": "Delete user",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"const response = pm.response.json();",
+													"",
+													"pm.environment.set(\"jwt_token\", response.access_token);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"username\": \"user\",\n\t\"password\": \"password\",\n\t\"extra\": \"blerg\"\n}"
+										},
+										"url": {
+											"raw": "http://localhost:3001/users",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3001",
+											"path": [
+												"users"
+											]
+										},
+										"description": "The body must have `username`, `password` and `extra`. It returns `id_token` and `access_token` which are signed with the secret located at the `config.json` file. The `id_token` will contain the `username` and the `extra` information sent, while the `access_token` will contain the `audience`, `jti`, `issuer` and `scope`."
+									},
+									"response": [
+										{
+											"name": "Successful response",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"username\": \"user\",\n\t\"password\": \"password\",\n\t\"extra\": \"blerg\"\n}"
+												},
+												"url": {
+													"raw": "http://localhost:3001/users",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "3001",
+													"path": [
+														"users"
+													]
+												}
+											},
+											"status": "Created",
+											"code": 201,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*",
+													"name": "Access-Control-Allow-Origin",
+													"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive",
+													"name": "Connection",
+													"description": "Options that are desired for the connection"
+												},
+												{
+													"key": "Content-Length",
+													"value": "523",
+													"name": "Content-Length",
+													"description": "The length of the response body in octets (8-bit bytes)"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8",
+													"name": "Content-Type",
+													"description": "The mime type of this content"
+												},
+												{
+													"key": "Date",
+													"value": "Thu, 13 Sep 2018 20:42:22 GMT",
+													"name": "Date",
+													"description": "The date and time that the message was sent"
+												},
+												{
+													"key": "ETag",
+													"value": "W/\"20b-/ULiXCB/BjV9XztkCrB50vUZugI\"",
+													"name": "ETag",
+													"description": "An identifier for a specific version of a resource, often a message digest"
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "Express",
+													"name": "X-Powered-By",
+													"description": "Specifies the technology (ASP.NET, PHP, JBoss, e.g.) supporting the web application (version details are often in X-Runtime, X-Version, or X-AspNet-Version)"
+												}
+											],
+											"cookie": [],
+											"body": "{\"id_token\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzZXIiLCJleHRyYSI6ImJsZXJnIiwiaWQiOjIsImlhdCI6MTUzNjg3MTM0MiwiZXhwIjoxNTM2ODg5MzQyfQ.OWx1l_oDyuC7Oi0uO-iglA9quxxZ2ksX-BT2lqYjojY\",\"access_token\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2dvbnRvLmNvbSIsImF1ZCI6Im5vZGVqcy1qd3QtYXV0aCIsImV4cCI6MTUzNjg3NDk0Miwic2NvcGUiOiJmdWxsX2FjY2VzcyIsInN1YiI6ImxhbGFsYW5kfGdvbnRvIiwianRpIjoiazJ4QXBOVVExWm1tQWdtcSIsImFsZyI6IkhTMjU2IiwiaWF0IjoxNTM2ODcxMzQyfQ.RTNmeyb-6mZpFEqQz0V194nKax91qJk5GN01u3hpA-Q\"}"
+										}
+									]
+								},
+								{
+									"name": "Delete session",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"const response = pm.response.json();",
+													"",
+													"pm.environment.set(\"jwt_token\", response.access_token);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"username\": \"user\",\n\t\"password\": \"password\"\n}"
+										},
+										"url": {
+											"raw": "http://localhost:3001/sessions/create",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3001",
+											"path": [
+												"sessions",
+												"create"
+											]
+										},
+										"description": "The body must have `username` and `password`. It returns `id_token` and `access_token` are signed with the secret located at the `config.json` file. The `id_token` will contain the `username` and the `extra` information sent, while the `access_token` will contain the `audience`, `jti`, `issuer` and `scope`."
+									},
+									"response": [
+										{
+											"name": "Successful response",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"username\": \"user\",\n\t\"password\": \"password\"\n}"
+												},
+												"url": {
+													"raw": "http://localhost:3001/sessions/create",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "3001",
+													"path": [
+														"sessions",
+														"create"
+													]
+												}
+											},
+											"status": "Created",
+											"code": 201,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*",
+													"name": "Access-Control-Allow-Origin",
+													"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive",
+													"name": "Connection",
+													"description": "Options that are desired for the connection"
+												},
+												{
+													"key": "Content-Length",
+													"value": "523",
+													"name": "Content-Length",
+													"description": "The length of the response body in octets (8-bit bytes)"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8",
+													"name": "Content-Type",
+													"description": "The mime type of this content"
+												},
+												{
+													"key": "Date",
+													"value": "Thu, 13 Sep 2018 20:44:42 GMT",
+													"name": "Date",
+													"description": "The date and time that the message was sent"
+												},
+												{
+													"key": "ETag",
+													"value": "W/\"20b-OddoFD1q11lfCJ55kXMN6jd5YHE\"",
+													"name": "ETag",
+													"description": "An identifier for a specific version of a resource, often a message digest"
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "Express",
+													"name": "X-Powered-By",
+													"description": "Specifies the technology (ASP.NET, PHP, JBoss, e.g.) supporting the web application (version details are often in X-Runtime, X-Version, or X-AspNet-Version)"
+												}
+											],
+											"cookie": [],
+											"body": "{\"id_token\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzZXIiLCJleHRyYSI6ImJsZXJnIiwiaWQiOjIsImlhdCI6MTUzNjg3MTQ4MiwiZXhwIjoxNTM2ODg5NDgyfQ.ssLIBEyAF73iQQH7byi6OiXfa1r467wKx_VmfhjJSeY\",\"access_token\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2dvbnRvLmNvbSIsImF1ZCI6Im5vZGVqcy1qd3QtYXV0aCIsImV4cCI6MTUzNjg3NTA4Miwic2NvcGUiOiJmdWxsX2FjY2VzcyIsInN1YiI6ImxhbGFsYW5kfGdvbnRvIiwianRpIjoiRVJmSVVoR2hmaUxNbDFFUyIsImFsZyI6IkhTMjU2IiwiaWF0IjoxNTM2ODcxNDgyfQ.isN1Pl40xa8Ml_8Alh6kcrqO6JvXCkXdCBx0IFeFzCc\"}"
+										}
+									]
+								}
+							],
+							"description": "After your tests run, you may need to clean up the test conditions, so that you're not littering new users, records, and other side effects throughout your test environment.\n\nThe requests in this folder are just examples of cleaning up your test environment. You can't actually delete users or sessions in this example.",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							]
+						}
+					],
+					"description": "The requests in this folder are from a [NodeJS API](https://github.com/auth0-blog/nodejs-jwt-authentication-sample) that supports username and password authentication with JWTs and has APIs that return Chuck Norris phrases. \n\n---\n\nNaming a collection or folder with `#contract` or `#integration` allows you to programmatically parse the tests that should be run in different circumstances, when used in conjunction with the [Postman API](https://docs.api.getpostman.com/).\n\n# Using workspaces for automation\nUse workspaces to organize your services, and also to group together collections of tests that must be passed when deploying new code to the next server environment. Use the [Postman API](https://docs.api.getpostman.com/) to fetch a workspace along with all the collections and environments associated with that workspace and create a programmatic solution. \n\nHere's one way the Postman team uses collections and workspaces for automation:\n\n1. Create a collection of validation tests for the provider service. This can include contract validation tests driven by the consumers who are dependent on this service. This can also include integration tests to ensure more complex scenarios involving other components aren't broken when deploying new code.\n2. The name of the collection can include a tag indicating when these tests should be executed (e.g. #contract or #integration). The collection can be shared to the workspace of the provider service. Alternatively, a new workspace can be created (e.g. Continuous Integration) containing all the collections of tests that you care about in the specified circumstances.\n3. Use the [Postman API](https://docs.api.getpostman.com/) to `GET` all the collections and environments associated with your workspace. Parse the entities to discern which collections should be run in the specified circumstances.\n\n# Setup and teardown\nNotice the nested folders are organized according to Setup, Tests, and Teardown. Automating the setup and teardown steps allows you to quickly re-create your test conditions in a consistent way so that you can repeat your tests quickly and easily.\n",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Using mocks",
+					"item": [
+						{
+							"name": "Mocked endpoint",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonData = pm.response.json();",
+											"pm.environment.set(\"bitcoinRate\", jsonData.bpi.USD.rate);",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://c54c22f8-1b5e-4f00-8865-684319b1105b.mock.pstmn.io/bitcoin",
+									"protocol": "https",
+									"host": [
+										"c54c22f8-1b5e-4f00-8865-684319b1105b",
+										"mock",
+										"pstmn",
+										"io"
+									],
+									"path": [
+										"bitcoin"
+									]
+								},
+								"description": "Instead of making a request to the [Coindesk API](https://www.coindesk.com/api/), this request relies on a [Postman mock endpoint](https://www.getpostman.com/docs/v6/postman/mock_servers/intro_to_mock_servers) to return a predictable response.\n\nSend a request to this endpoint to view the mocked response, or view an example response under the **Examples** link."
+							},
+							"response": [
+								{
+									"name": "Mocked endpoint",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url}}/bitcoin",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"bitcoin"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Access-Control-Allow-Credentials",
+											"value": ""
+										},
+										{
+											"key": "Access-Control-Allow-Headers",
+											"value": ""
+										},
+										{
+											"key": "Access-Control-Allow-Methods",
+											"value": ""
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Access-Control-Expose-Headers",
+											"value": ""
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 19 Nov 2018 20:27:01 GMT"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"a7-kIxN5L9H0YwilUQPUUio9A\""
+										},
+										{
+											"key": "Server",
+											"value": "nginx"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Content-Length",
+											"value": "152"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"time\": {\n        \"updated\": \"Nov 19, 2018 20:25:00 UTC\",\n        \"updatedISO\": \"2018-11-19T20:25:00+00:00\",\n        \"updateduk\": \"Nov 19, 2018 at 20:25 GMT\"\n    },\n    \"disclaimer\": \"This data was produced from the CoinDesk Bitcoin Price Index (USD). Non-USD currency data converted using hourly conversion rate from openexchangerates.org\",\n    \"chartName\": \"Bitcoin\",\n    \"bpi\": {\n        \"USD\": {\n            \"code\": \"USD\",\n            \"symbol\": \"&#36;\",\n            \"rate\": \"5,003.4550\",\n            \"description\": \"United States Dollar\",\n            \"rate_float\": 5003.455\n        },\n        \"GBP\": {\n            \"code\": \"GBP\",\n            \"symbol\": \"&pound;\",\n            \"rate\": \"3,892.1176\",\n            \"description\": \"British Pound Sterling\",\n            \"rate_float\": 3892.1176\n        },\n        \"EUR\": {\n            \"code\": \"EUR\",\n            \"symbol\": \"&euro;\",\n            \"rate\": \"4,368.2164\",\n            \"description\": \"Euro\",\n            \"rate_float\": 4368.2164\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Echo the exchange rate",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://postman-echo.com/get?foo1={{bitcoinRate}}",
+									"protocol": "https",
+									"host": [
+										"postman-echo",
+										"com"
+									],
+									"path": [
+										"get"
+									],
+									"query": [
+										{
+											"key": "foo1",
+											"value": "{{bitcoinRate}}",
+											"description": "Set this variable in the previous request"
+										}
+									]
+								},
+								"description": "This request will use information saved to a variable in a previous request."
+							},
+							"response": [
+								{
+									"name": "Status",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "https://postman-echo.com/get?foo1=bar1&foo2=bar2",
+											"protocol": "https",
+											"host": [
+												"postman-echo",
+												"com"
+											],
+											"path": [
+												"get"
+											],
+											"query": [
+												{
+													"key": "foo1",
+													"value": "bar1"
+												},
+												{
+													"key": "foo2",
+													"value": "bar2"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 15 Nov 2018 22:21:20 GMT"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"1cd-LkUKVugbVYQuMcTU7OTzmp77cMo\""
+										},
+										{
+											"key": "Server",
+											"value": "nginx"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Content-Length",
+											"value": "348"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"args\": {\n        \"foo1\": \"bar1\",\n        \"foo2\": \"bar2\"\n    },\n    \"headers\": {\n        \"x-forwarded-proto\": \"https\",\n        \"host\": \"postman-echo.com\",\n        \"accept\": \"*/*\",\n        \"accept-encoding\": \"gzip, deflate\",\n        \"cache-control\": \"no-cache\",\n        \"cookie\": \"sails.sid=s%3AK8csWt5VZ3Oalv85HiBtffDcrSOJ-RiP.V14RjjJqkOv8%2BLXuHRmZ9l50G8S6eU16yLU%2F3N%2F0dKU\",\n        \"postman-token\": \"c6b9bca5-7369-4da8-a539-6c906d1133f2\",\n        \"user-agent\": \"PostmanRuntime/7.3.0\",\n        \"x-forwarded-port\": \"443\"\n    },\n    \"url\": \"https://postman-echo.com/get?foo1=bar1&foo2=bar2\"\n}"
+								}
+							]
+						}
+					],
+					"description": "[Mocking an endpoint](https://medium.com/postman-engineering/https-medium-com-postman-engineering-fake-it-till-you-make-it-mocks-for-agile-development-f4d050cad694) allows you to simulate external or internal dependencies so that you can isolate the system under test. It also allows you to mock certeain error conditions that may be difficult or problematic to re-create in a production environment\n\nThe first request in this folder mocks an external endpoint. We previously reviewed an example using the [Coindesk API](https://www.coindesk.com/api/). Instead of making a request to the Coindesk API, we will rely on a mock response from the Postman cloud.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			],
+			"description": "Knowing how your endpoints interact with other systems is an important part of testing.\n\n# Automating your tests in Postman\nNow that you've written automated tests, there's a few ways to execute your tests.\n* From the Postman app with [the collection runner](https://www.getpostman.com/docs/v6/postman/collection_runs/starting_a_collection_run)\n* From the Postman cloud with [a scheduled monitor](https://www.getpostman.com/docs/v6/postman/monitors/intro_monitors)\n* From the command line or as part of a CI/CD pipeline [with Newman](http://blog.getpostman.com/2018/06/21/newman-run-and-test-your-collections-from-the-command-line/)\n\n![[newman gif](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/newmanEcho.gif)](https://s3.amazonaws.com/postman-static-getpostman-com/postman-docs/newmanEcho.gif)\n\n# Other helpful tools\nThere are a number of tools for visualizing your test results. When a test fails, you can drill down to debug and isolate the issues.\n* Console [to visualize network calls and log statements](https://www.getpostman.com/docs/v6/postman/sending_api_requests/debugging_and_logs#network-calls-with-postman-console)\n* Similar [console for monitors](https://www.getpostman.com/docs/v6/postman/monitors/troubleshooting_monitors)\n* [Viewing monitor results](https://www.getpostman.com/docs/v6/postman/monitors/viewing_monitor_results) and [receiving alerts for failures](https://www.getpostman.com/docs/v6/postman/monitors/integrations_for_alerts)\n* Common [reporters for Newman output](https://github.com/postmanlabs/newman#reporters)\n* [Mock services](https://medium.com/postman-engineering/https-medium-com-postman-engineering-fake-it-till-you-make-it-mocks-for-agile-development-f4d050cad694) for isolating dependencies\n",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

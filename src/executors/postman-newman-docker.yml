@@ -1,0 +1,8 @@
+description: Official newman docker image - https://hub.docker.com/r/postman/newman
+docker:
+  - image: postman/newman:<<parameters.tag>>
+parameters:
+  tag:
+    default: latest
+    description: Tag for postman/newman docker image - https://hub.docker.com/r/postman/newman/tags
+    type: string
