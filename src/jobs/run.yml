@@ -1,0 +1,112 @@
+description: >
+  Checkout repository, run Newman, and export results to the workspace.
+executor: << parameters.executor >>
+parameters:
+  collection:
+    description: Collection file path or URL
+    type: string
+  environment:
+    description: Environment file path or URL
+    type: string
+    default: ''
+  executor:
+    description: An executor to use with the run job.
+    type: executor
+    default: postman-newman-docker
+  globals:
+    description: Globals file path or URL
+    type: string
+    default: ''
+  iteration-count:
+    description: Number of times the collection has to be run when used in conjunction with iteration data
+    type: string
+    default: ''
+  iteration-data:
+    description: Data source (CSV) file path or URL to be used for iteration
+    type: string
+    default: ''
+  folder:
+    description: Run requests within a particular folder/folders in a collection
+    type: string
+    default: ''
+  export-environment:
+    description: File path where Newman will output the final environment variables file before completing a run
+    type: string
+    default: ''
+  export-globals:
+    description: File path where Newman will output the final global variables file before completing a run
+    type: string
+    default: ''
+  export-collection:
+    description: File path where Newman will output the final collection file before completing a run
+    type: string
+    default: ''
+  timeout:
+    description: Time (in milliseconds) to wait for the entire collection run to complete execution
+    type: string
+    default: ''
+  timeout-request:
+    description: Time (in milliseconds) to wait for requests to return a response
+    type: string
+    default: ''
+  timeout-script:
+    description: Time (in milliseconds) to wait for scripts to complete execution
+    type: string
+    default: ''
+  insecure:
+    description: Disables SSL verification checks and allows self-signed SSL certificates
+    type: boolean
+    default: false
+  ignore-redirects:
+    description: Disable automatically following 3XX redirect responses
+    type: boolean
+    default: false
+  delay-request:
+    description: Delay between requests (milliseconds)
+    type: string
+    default: ''
+  additional-options:
+    description: |
+      Additional options for newman run like --bail, --suppress-exit-code, client certificates and reporters, etc
+      References
+        https://github.com/postmanlabs/newman#newman-run-collection-file-source-options
+        https://github.com/postmanlabs/newman#ssl-client-certificates
+        https://github.com/postmanlabs/newman#reporters
+    type: string
+    default: ''
+  persist-exports:
+    description: Whether to persist exports from the Newman run.
+    type: boolean
+    default: false
+  persist-workspace-root:
+    description: The root directory for persisting Newman artifacts.
+    type: string
+    default: ~/project
+  persist-workspace-path:
+    description: The artifact directory, relative to persist-workspace-root, that contains Newman reports.
+    type: string
+    default: newman
+steps:
+  - checkout
+  - newman-run:
+      collection: << parameters.collection >>
+      environment: << parameters.environment >>
+      globals: << parameters.globals >>
+      iteration-count: << parameters.iteration-count >>
+      iteration-data: << parameters.iteration-data >>
+      folder: << parameters.folder >>
+      export-environment: << parameters.export-environment >>
+      export-globals: << parameters.export-globals >>
+      export-collection: << parameters.export-collection >>
+      timeout: << parameters.timeout >>
+      timeout-request: << parameters.timeout-request >>
+      timeout-script: << parameters.timeout-script >>
+      insecure: << parameters.insecure >>
+      ignore-redirects: << parameters.ignore-redirects >>
+      delay-request: << parameters.delay-request >>
+      additional-options: << parameters.additional-options >>
+  - persist_to_workspace:
+      when: << parameters.persist-exports >>
+      root: << parameters.persist-workspace-root >>
+      paths:
+        - << parameters.persist-workspace-path >>
